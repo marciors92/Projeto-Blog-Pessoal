@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import org.generation.blogpessoal.model.UserLogin;
 import org.generation.blogpessoal.model.Usuario;
+import org.generation.blogpessoal.model.UsuarioLogin;
 import org.generation.blogpessoal.service.UsuarioService;
 
 @RestController
 @RequestMapping("/usuarios") 
-@CrossOrigin(origins = "", allowedHeaders = "")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UsuarioController {
 
 	@Autowired
@@ -32,15 +32,17 @@ public class UsuarioController {
 
 	@PostMapping("/logar")
 	public ResponseEntity<UsuarioLogin> login(@RequestBody Optional<UsuarioLogin> user) {
-		return usuarioService.autenticarUsuario(user)
+		return usuarioService.Logar(user)
 				.map(respostaAutenticacao -> ResponseEntity.ok(respostaAutenticacao))
 				.orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
 	}
 
 	@PostMapping("/cadastrar")
 	public ResponseEntity<Usuario> postUsuario(@RequestBody Usuario usuario) {
-		return usuarioService.cadastrarUsuario(usuario)
+		return usuarioService.CadastrarUsuario(usuario)
 				.map(respostaCadastro -> ResponseEntity.status(HttpStatus.CREATED).body(respostaCadastro))
 				.orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
 
 	}
+	
+}
