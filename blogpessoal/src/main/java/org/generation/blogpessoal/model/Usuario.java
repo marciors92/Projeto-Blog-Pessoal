@@ -9,10 +9,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import io.swagger.annotations.ApiModelProperty;
 
 @Entity
 @Table(name = "tb_usuario")
@@ -28,6 +31,9 @@ public class Usuario {
 
     @NotNull
     @Size(min = 3, max = 100)
+    @ApiModelProperty(example = "email@email.com.br")
+    @NotNull(message = "O atributo Usuário é obrigatório!")
+    @Email(message = "O atributo Usuário deve ser um email válido!")
     private String usuario;
 
     @NotNull
@@ -38,7 +44,7 @@ public class Usuario {
 	@JsonIgnoreProperties("usuario")
 	private List <Postagem> postagem;
     
-    // Primeiro método Construtor
+    // 1o método Construtor
 
  	public Usuario(long id, String nome, String usuario, String senha) {
  		this.id = id;
@@ -47,7 +53,7 @@ public class Usuario {
  		this.senha = senha;
  	}
 
- 	// Segundo método Construtor
+ 	// 2o método Construtor
 
  	public Usuario() {	}
 
@@ -91,6 +97,5 @@ public class Usuario {
 	public void setPostagem(List<Postagem> postagem) {
 		this.postagem = postagem;
 	}
-    
 
 }
